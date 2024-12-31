@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Visualización de Datos</h1>
+    <canvas id="grafico"></canvas>
+
+    <script>
+        fetch('/datos')
+            .then(response => response.json())
+            .then(datos => {
+                const categorias = datos.map(d => d[1]);
+                const cantidades = datos.map(d => d[2]);
+
+                const ctx = document.getElementById('grafico').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: categorias,
+                        datasets: [{
+                            label: 'Cantidad por Categoría',
+                            data: cantidades,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        }]
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
